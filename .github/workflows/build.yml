@@ -5,4 +5,4 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
     - name: use build from infra repository
-    - uses: IngSis-Grupo1-2024/snippet-infra/.github/workflows/build.yml@main
+      uses: IngSis-Grupo1-2024/snippet-infra/.github/workflows/build.yml@main
