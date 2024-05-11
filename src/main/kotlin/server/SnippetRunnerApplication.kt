@@ -1,4 +1,4 @@
-package com.example.snippetrunner
+package server
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
