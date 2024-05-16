@@ -17,6 +17,14 @@ java {
 
 repositories {
     mavenCentral()
+    maven {
+        name = "GitHubPackages"
+        url = uri("https://maven.pkg.github.com/IngSis-Grupo1-2024/PrintScript")
+        credentials {
+            username = (project.findProperty("gpr.user") ?: System.getenv("USERNAME")).toString()
+            password = (project.findProperty("gpr.key") ?: System.getenv("TOKEN")).toString()
+        }
+    }
 }
 
 dependencies {
@@ -31,6 +39,15 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.2.5")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     implementation("org.postgresql:postgresql:42.7.3")
+    implementation("PrintScript:app:1.1.0-SNAPSHOT")
+    implementation("PrintScript:cli:1.1.0-SNAPSHOT")
+    implementation("PrintScript:parser:1.1.0-SNAPSHOT")
+    implementation("PrintScript:lexer:1.1.0-SNAPSHOT")
+    implementation("PrintScript:interpreter:1.1.0-SNAPSHOT")
+    implementation("PrintScript:formatter:1.1.0-SNAPSHOT")
+    implementation("PrintScript:sca:1.1.0-SNAPSHOT")
+    implementation("PrintScript:components:1.1.0-SNAPSHOT")
+    implementation("PrintScript:utils:1.1.0-SNAPSHOT")
 }
 
 tasks.withType<KotlinCompile> {
