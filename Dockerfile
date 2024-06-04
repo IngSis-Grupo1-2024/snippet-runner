@@ -3,8 +3,8 @@ FROM gradle:8.7.0-jdk17 AS build
 ARG ACTOR
 ARG TOKEN
 
-ENV GITHUB_ACTOR ${ACTOR}
-ENV GITHUB_TOKEN ${GITHUB_TOKEN}
+ENV GITHUB_ACTOR ${{secrets.GITHUB_ACTOR}}
+ENV GITHUB_TOKEN ${{secrets.GITHUB_TOKEN}}
 COPY  . /home/gradle/src
 WORKDIR /home/gradle/src
 RUN gradle assemble
