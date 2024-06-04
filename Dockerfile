@@ -4,7 +4,7 @@ ARG ACTOR
 ARG TOKEN
 
 ENV GITHUB_ACTOR ${ACTOR}
-ENV GITHUB_TOKEN ${TOKEN}
+ENV GITHUB_TOKEN ${GITHUB_TOKEN}
 COPY  . /home/gradle/src
 WORKDIR /home/gradle/src
 RUN gradle assemble
