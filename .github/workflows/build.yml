@@ -4,6 +4,6 @@ jobs:
   build: 
     uses: IngSis-Grupo1-2024/snippet-infra/.github/workflows/build.yml@main
     with:
-      actor: ${{ secrets.deployment.ACTOR }}
+      actor: ${{ deployment.ACTOR }}
     secrets:
-      token: ${{ secrets.deployment.TOKEN }}
+      token: ${{ deployment.TOKEN }}
