@@ -1,9 +1,9 @@
 name: Build
 on: [push, pull_request]
-jobs:
-  build: 
+  jobs:
+    build:
     uses: IngSis-Grupo1-2024/snippet-infra/.github/workflows/build.yml@main
     with:
-      actor: ${{ github.repository_owner }}
-    secrets:
-      token: ${{ secrets.GITHUB_TOKEN }}
+      actor: ${{ secrets.ACTOR }}
+      secrets:
+        token: ${{ secrets.TOKEN }}
