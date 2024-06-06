@@ -3,3 +3,5 @@ on: [push, pull_request]
 jobs:
   build: 
     uses: IngSis-Grupo1-2024/snippet-infra/.github/workflows/build.yml@main
+  dev_cd:
+    uses: IngSis-Grupo1-2024/snippet-infra/.github/workflows/dev_cd.yml@main
