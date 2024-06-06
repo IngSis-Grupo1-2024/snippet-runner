@@ -3,3 +3,7 @@ on: [push, pull_request]
 jobs:
   build: 
     uses: IngSis-Grupo1-2024/snippet-infra/.github/workflows/build.yml@main
+    with:
+      GITHUB_ACTOR: ${{ github.actor }}
+    secrets:
+      TOKEN: ${{ secrets.GITHUB_TOKEN }}
