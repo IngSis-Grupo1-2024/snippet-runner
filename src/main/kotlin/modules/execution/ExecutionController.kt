@@ -11,9 +11,13 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/execute")
 class ExecutionController(private val service: ExecutionService){
-    @PostMapping("/withFile", produces = ["application/json"])
-    fun withFile(@RequestBody filePath: String): ResponseEntity<String> {
-        val response = service.execute(filePath)
-        return ResponseEntity(HttpStatus.OK)
+    @PostMapping("/byID", produces = ["application/json"])
+    fun byId(@RequestBody snippetId: Int): ResponseEntity<String> {
+        return try {
+            val outputString = service.execute(snippetId)
+            ResponseEntity(outputString.getMessage(), HttpStatus.OK)
+        } catch (e: Exception) {
+            ResponseEntity("An error occurred: ${e.message}", HttpStatus.INTERNAL_SERVER_ERROR)
+        }
     }
 }
