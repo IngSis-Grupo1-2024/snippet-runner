@@ -1,0 +1,12 @@
+#!/bin/bash
+
+./gradlew build --daemon
+
+if [ $? -ne 0 ]; then
+  echo 'Build failed, fix before committing.'
+  exit 1
+fi
+
+echo 'Build passed'
+
+exit 0

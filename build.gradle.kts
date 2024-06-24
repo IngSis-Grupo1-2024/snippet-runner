@@ -40,6 +40,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.2.5")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     implementation("org.postgresql:postgresql:42.7.3")
+    // PrintScript modules:
     implementation("PrintScript:app:1.1.0-SNAPSHOT")
     implementation("PrintScript:cli:1.1.0-SNAPSHOT")
     implementation("PrintScript:parser:1.1.0-SNAPSHOT")
@@ -49,6 +50,11 @@ dependencies {
     implementation("PrintScript:sca:1.1.0-SNAPSHOT")
     implementation("PrintScript:components:1.1.0-SNAPSHOT")
     implementation("PrintScript:utils:1.1.0-SNAPSHOT")
+    // for swagger to use the requests as asset-service:
+    implementation("org.springdoc:springdoc-openapi-ui:1.7.0")
+    implementation("org.springdoc:springdoc-openapi-kotlin:1.7.0")
+    implementation("org.springdoc:springdoc-openapi-data-rest:1.7.0")
+    implementation("org.springdoc:springdoc-openapi-webflux-ui:1.7.0")
 }
 
 tasks.withType<KotlinCompile> {
@@ -84,7 +90,6 @@ tasks.register<JavaExec>("ktlintFormat") {
     classpath = ktlint
     mainClass.set("com.pinterest.ktlint.Main")
     jvmArgs("--add-opens=java.base/java.lang=ALL-UNNAMED")
-    // see https://pinterest.github.io/ktlint/install/cli/#command-line-usage for more information
     args(
         "-F",
         "**/src/**/*.kt",

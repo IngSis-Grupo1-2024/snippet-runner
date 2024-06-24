@@ -8,6 +8,7 @@ gradle.properties
 .env
 
 ### STS ###
+.env
 .apt_generated
 .classpath
 .factorypath

@@ -6,10 +6,12 @@ import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer
 import org.springframework.http.MediaType
 import org.springframework.web.servlet.config.annotation.CorsRegistry
 
-
 @Configuration
-class SpringRestConfiguration: RepositoryRestConfigurer {
-    override fun configureRepositoryRestConfiguration(config: RepositoryRestConfiguration, cors: CorsRegistry?) {
+class SpringRestConfiguration : RepositoryRestConfigurer {
+    override fun configureRepositoryRestConfiguration(
+        config: RepositoryRestConfiguration,
+        cors: CorsRegistry?,
+    ) {
         config.setDefaultMediaType(MediaType.APPLICATION_JSON)
         config.useHalAsDefaultJsonMediaType(false)
     }

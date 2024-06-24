@@ -1,0 +1,10 @@
+{
+  "println" : {
+    "on" : true,
+    "quantity" : 2
+  },
+  "afterDeclaration" : {
+    "on" : false,
+    "quantity" : 2
+  }
+}
