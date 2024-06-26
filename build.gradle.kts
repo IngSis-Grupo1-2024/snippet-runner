@@ -25,6 +25,15 @@ repositories {
             password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
         }
     }
+
+    maven {
+        name = "GitHubPackagesClassRedisStreams"
+        url = uri("https://maven.pkg.github.com/austral-ingsis/class-redis-streams")
+        credentials {
+            username = project.findProperty("gpr.user") as String? ?: System.getenv("GITHUB_ACTOR")
+            password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
+        }
+    }
 }
 
 dependencies {
@@ -49,6 +58,9 @@ dependencies {
     implementation("PrintScript:sca:1.1.0-SNAPSHOT")
     implementation("PrintScript:components:1.1.0-SNAPSHOT")
     implementation("PrintScript:utils:1.1.0-SNAPSHOT")
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
+    implementation("org.austral.ingsis:redis-streams-mvc:0.1.13")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
 }
 
 tasks.withType<KotlinCompile> {

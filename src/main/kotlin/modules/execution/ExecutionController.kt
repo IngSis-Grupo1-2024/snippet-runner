@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/execute")
-class ExecutionController(private val service: ExecutionService){
+class ExecutionController(private val service: ExecutionService) {
     @PostMapping("/withFile", produces = ["application/json"])
-    fun withFile(@RequestBody filePath: String): ResponseEntity<String> {
+    fun withFile(
+        @RequestBody filePath: String,
+    ): ResponseEntity<String> {
         val response = service.execute(filePath)
         return ResponseEntity(HttpStatus.OK)
     }

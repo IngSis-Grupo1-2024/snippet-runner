@@ -7,28 +7,37 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/users")
-class UserController(@Autowired private val userRepository: UserRepository) {
-
+class UserController(
+    @Autowired private val userRepository: UserRepository,
+) {
     @GetMapping("")
-    fun getAllUsers(): List<User> =
-        userRepository.findAll().toList()
+    fun getAllUsers(): List<User> = userRepository.findAll().toList()
 
     @PostMapping("")
-    fun createUser(@RequestBody user: User): ResponseEntity<User> {
+    fun createUser(
+        @RequestBody user: User,
+    ): ResponseEntity<User> {
         val createdUser = userRepository.save(user)
         return ResponseEntity(createdUser, HttpStatus.CREATED)
     }
 
     @GetMapping("/{id}")
-    fun getUserById(@PathVariable("id") userId: Long): ResponseEntity<User> {
+    fun getUserById(
+        @PathVariable("id") userId: Long,
+    ): ResponseEntity<User> {
         val user = userRepository.findById(userId).orElse(null)
-        return if (user != null) ResponseEntity(user, HttpStatus.OK)
-        else ResponseEntity(HttpStatus.NOT_FOUND)
+        return if (user != null) {
+            ResponseEntity(user, HttpStatus.OK)
+        } else {
+            ResponseEntity(HttpStatus.NOT_FOUND)
+        }
     }
 
     @PutMapping("/{id}")
-    fun updateUserById(@PathVariable("id") userId: Long, @RequestBody user: User): ResponseEntity<User> {
-
+    fun updateUserById(
+        @PathVariable("id") userId: Long,
+        @RequestBody user: User,
+    ): ResponseEntity<User> {
         val existingUser = userRepository.findById(userId).orElse(null)
 
         if (existingUser == null) {
@@ -39,7 +48,9 @@ class UserController(@Autowired private val userRepository: UserRepository) {
     }
 
     @DeleteMapping("/{id}")
-    fun deleteUserById(@PathVariable("id") userId: Long): ResponseEntity<User> {
+    fun deleteUserById(
+        @PathVariable("id") userId: Long,
+    ): ResponseEntity<User> {
         if (!userRepository.existsById(userId)) {
             return ResponseEntity(HttpStatus.NOT_FOUND)
         }

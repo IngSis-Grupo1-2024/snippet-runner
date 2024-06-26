@@ -6,7 +6,10 @@ import java.io.InputStream
 
 @Repository
 class ExecutionRepository {
-    fun execute(inputStream: InputStream, output: OutputString) {
+    fun execute(
+        inputStream: InputStream,
+        output: OutputString,
+    ) {
         output.print("Print Script is not set up")
     }
 }
