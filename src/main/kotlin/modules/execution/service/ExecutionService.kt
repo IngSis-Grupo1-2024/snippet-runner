@@ -43,7 +43,7 @@ class ExecutionService {
                 snippetInfo.content.byteInputStream(),
                 output,
                 snippetInfo.version,
-                InputAdapter(inputQueue)
+                InputAdapter(inputQueue),
             )
         } catch (e: Exception) {
             output.handleError(e.message!!)
@@ -62,7 +62,7 @@ class ExecutionService {
                 snippetInfo.content.byteInputStream(),
                 output,
                 snippetInfo.version,
-                InputAdapter(inputQueue)
+                InputAdapter(inputQueue),
             )
         } catch (e: Exception) {
             output.handleError(e.message!!)
@@ -70,8 +70,7 @@ class ExecutionService {
         val result = output.getOutput().output[0]
         if (result == "SUCCESSFUL ANALYSIS") {
             return ResponseEntity.ok(output.getOutput())
-        }
-        else {
+        } else {
             output.body = mutableListOf()
             output.handleError(result)
             return ResponseEntity.badRequest().body(output.getOutput())
@@ -82,10 +81,11 @@ class ExecutionService {
         val jsonMap = mutableMapOf<String, Map<String, Any>>()
 
         rulesList.forEach { rule ->
-            jsonMap[rule.name] = mapOf(
-                "on" to rule.isActive,
-                "quantity" to rule.value.toInt()
-            )
+            jsonMap[rule.name] =
+                mapOf(
+                    "on" to rule.isActive,
+                    "quantity" to rule.value.toInt(),
+                )
         }
 
         val objectMapper = ObjectMapper().registerModule(KotlinModule())
@@ -100,13 +100,14 @@ class ExecutionService {
         val jsonMap = mutableMapOf<String, Map<String, Any>>()
 
         rulesList.forEach { rule ->
-            jsonMap[rule.name] = mapOf(
-                "on" to rule.isActive,
-                "expression" to rule.expression,
-                "identifier" to rule.identifier,
-                "literal" to rule.literal,
+            jsonMap[rule.name] =
+                mapOf(
+                    "on" to rule.isActive,
+                    "expression" to rule.expression,
+                    "identifier" to rule.identifier,
+                    "literal" to rule.literal,
 //                "format" to rule.format
-            )
+                )
         }
 
         val objectMapper = ObjectMapper().registerModule(KotlinModule())
@@ -116,5 +117,4 @@ class ExecutionService {
         file.writeText(jsonString)
         return Paths.get(file.absolutePath)
     }
-
 }

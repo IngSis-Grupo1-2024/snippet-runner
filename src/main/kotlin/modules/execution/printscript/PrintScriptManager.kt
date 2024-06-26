@@ -9,11 +9,9 @@ import ingsis.utils.OutputEmitter
 import modules.execution.language.LanguageManager
 import org.springframework.stereotype.Service
 import java.io.InputStream
-import java.nio.file.Path
 
 @Service
-class PrintScriptManager: LanguageManager {
-
+class PrintScriptManager : LanguageManager {
     private fun parseToPrintScriptVersion(version: String): Version {
         return when (version) {
             "v1" -> Version.VERSION_1

@@ -2,9 +2,9 @@ package modules.execution.output
 
 import ingsis.utils.OutputEmitter
 
-class FormatOutput (
+class FormatOutput(
     val body: String,
-    val error: String
+    val error: String,
 ) : OutputEmitter {
     override fun print(string: String) {
         println(string)
