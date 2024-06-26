@@ -16,7 +16,7 @@ interface LanguageManager {
                version: String,
                input: Input)
     fun analyze(rulePath: String,
-                filePath: Path,
+                inputStream: InputStream,
                 outputEmitter: OutputEmitter,
                 version: String,
                 input: Input)

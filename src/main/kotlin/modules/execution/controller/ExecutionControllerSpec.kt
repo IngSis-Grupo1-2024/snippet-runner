@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import modules.execution.model.SnippetInput
 import modules.execution.model.FormatInput
+import modules.execution.model.LinterInput
 import modules.execution.output.ExecutionOutputDto
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
@@ -50,6 +51,25 @@ interface ExecutionControllerSpec {
     )
     fun formatSnippet(
         @RequestBody snippetInfo: FormatInput,
+    ): ResponseEntity<ExecutionOutputDto>
+
+    @PostMapping("/lintSnippet")
+    @Operation(
+        summary = "Lint snippet",
+        responses = [
+            ApiResponse(
+                responseCode = "200",
+                content = [Content(schema = Schema(implementation = ExecutionOutputDto::class))],
+            ),
+            ApiResponse(
+                responseCode = "400",
+                description = "Snippet linting failed",
+                content = [Content(schema = Schema(implementation = String::class))],
+            ),
+        ],
+    )
+    fun lintSnippet(
+        @RequestBody snippetInfo: LinterInput,
     ): ResponseEntity<ExecutionOutputDto>
 
 }

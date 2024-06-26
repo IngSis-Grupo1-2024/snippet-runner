@@ -47,12 +47,13 @@ class PrintScriptManager: LanguageManager {
 
     override fun analyze(
         rulePath: String,
-        filePath: Path,
+        inputStream: InputStream,
         outputEmitter: OutputEmitter,
         version: String,
         input: Input,
     ) {
         val analyzerInstance = AnalyzeCli(outputEmitter, parseToPrintScriptVersion(version), input)
-        analyzerInstance.analyzeFile(rulePath, filePath)
+        val result = analyzerInstance.analyzeInputStream(rulePath, inputStream)
+        outputEmitter.print(result)
     }
 }
