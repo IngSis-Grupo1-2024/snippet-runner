@@ -9,11 +9,9 @@ import ingsis.utils.OutputEmitter
 import modules.execution.language.LanguageManager
 import org.springframework.stereotype.Service
 import java.io.InputStream
-import java.nio.file.Path
 
 @Service
-class PrintScriptManager: LanguageManager {
-
+class PrintScriptManager : LanguageManager {
     private fun parseToPrintScriptVersion(version: String): Version {
         return when (version) {
             "v1" -> Version.VERSION_1
@@ -47,12 +45,13 @@ class PrintScriptManager: LanguageManager {
 
     override fun analyze(
         rulePath: String,
-        filePath: Path,
+        inputStream: InputStream,
         outputEmitter: OutputEmitter,
         version: String,
         input: Input,
     ) {
         val analyzerInstance = AnalyzeCli(outputEmitter, parseToPrintScriptVersion(version), input)
-        analyzerInstance.analyzeFile(rulePath, filePath)
+        val result = analyzerInstance.analyzeInputStream(rulePath, inputStream)
+        outputEmitter.print(result)
     }
 }

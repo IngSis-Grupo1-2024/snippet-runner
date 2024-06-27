@@ -3,7 +3,7 @@ package modules.execution.output
 import ingsis.utils.OutputEmitter
 
 class ExecutionOutput(
-    private val body: MutableList<String> = mutableListOf(),
+    var body: MutableList<String> = mutableListOf(),
     private val error: MutableList<String> = mutableListOf(),
 ) :
     OutputEmitter {

@@ -55,6 +55,9 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-kotlin:1.7.0")
     implementation("org.springdoc:springdoc-openapi-data-rest:1.7.0")
     implementation("org.springdoc:springdoc-openapi-webflux-ui:1.7.0")
+    // auth0 impl
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
+    implementation("org.springframework.boot:spring-boot-starter-security")
 }
 
 tasks.withType<KotlinCompile> {

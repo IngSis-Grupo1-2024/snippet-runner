@@ -1,6 +1,6 @@
 package modules.execution.model
 
-data class RulesInput(
+data class FormatRulesInput(
     val name: String,
     val isActive: Boolean,
     val value: String,
