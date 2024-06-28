@@ -64,9 +64,13 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-kotlin:1.7.0")
     implementation("org.springdoc:springdoc-openapi-data-rest:1.7.0")
     implementation("org.springdoc:springdoc-openapi-webflux-ui:1.7.0")
+    // redis
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("org.austral.ingsis:redis-streams-mvc:0.1.13")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
+    // auth0 impl
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
+    implementation("org.springframework.boot:spring-boot-starter-security")
 }
 
 tasks.withType<KotlinCompile> {
