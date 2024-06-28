@@ -1,1 +1,1 @@
-rootProject.name = "SnippetRunner"
+rootProject.name = "snippet-runner"

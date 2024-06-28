@@ -20,9 +20,8 @@ class LintConsumer(
     @Value("\${redis.groups.lint}") groupId: String,
     private val executor: cli.AnalyzeCli,
     private val snippetGetter: SnippetGetter,
-    private val producer: LintProducer
+    private val producer: LintProducer,
 ) : RedisStreamConsumer<LintRequest>(streamKey, groupId, redis) {
-
     init {
         subscription()
     }
@@ -44,19 +43,18 @@ class LintConsumer(
                     LintResult(
                         eventPayload.userId,
                         eventPayload.snippetId,
-                        resultEventStatus
-                    )
+                        resultEventStatus,
+                    ),
                 )
             }
-
         } catch (exception: Exception) {
             GlobalScope.launch {
                 producer.publishEvent(
                     LintResult(
                         eventPayload.userId,
                         eventPayload.snippetId,
-                        LintResultStatus.FAILURE
-                    )
+                        LintResultStatus.FAILURE,
+                    ),
                 )
             }
         } finally {
