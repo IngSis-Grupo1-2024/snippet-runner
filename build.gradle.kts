@@ -80,7 +80,7 @@ dependencies {
     // auth0 impl
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
     implementation("org.springframework.boot:spring-boot-starter-security")
-    //redis events
+    // redis events
     implementation("org.gradle.redisevents:events:1.1.0-SNAPSHOT")
 }
 
