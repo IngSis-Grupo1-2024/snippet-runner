@@ -36,7 +36,7 @@ repositories {
     }
 
     maven {
-        name = "GitHubPackages"
+        name = "GitHubPackagesRedisEvents"
         url = uri("https://maven.pkg.github.com/IngSis-Grupo1-2024/redis-events")
         credentials {
             username = project.findProperty("gpr.user") as String? ?: System.getenv("GITHUB_ACTOR")
