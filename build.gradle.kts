@@ -34,6 +34,15 @@ repositories {
             password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
         }
     }
+
+    maven {
+        name = "GitHubPackagesRedisEvents"
+        url = uri("https://maven.pkg.github.com/IngSis-Grupo1-2024/redis-events")
+        credentials {
+            username = project.findProperty("gpr.user") as String? ?: System.getenv("GITHUB_ACTOR")
+            password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
+        }
+    }
 }
 
 dependencies {
@@ -71,6 +80,8 @@ dependencies {
     // auth0 impl
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
     implementation("org.springframework.boot:spring-boot-starter-security")
+    //redis events
+    implementation("org.gradle.redisevents:events:1.1.0-SNAPSHOT")
 }
 
 tasks.withType<KotlinCompile> {

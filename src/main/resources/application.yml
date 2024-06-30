@@ -1,13 +1,20 @@
 spring:
+  data:
+    redis:
+      host: ${REDIS_HOST:redis}
+      port: ${REDIS_PORT:6379}
   security:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: ${AUTH0_ISSUER_URI}
-          client-id: ${AUTH0_CLIENT_ID}
-          client-secret: ${AUTH0_CLIENT_SECRET}
+          issuer-uri: https://dev-dxazwu1rijz501rx.us.auth0.com/
+          client-id: wsLlRrSaLvb45jz9v2UBugf4ruUxvd08
+          client-secret: bwEMgfxZ1PHDLROiqR9WugQoBGnFH_FZW4dsC5KzzAuFXxokhviX552vuKU6s_Yx
+  autoconfigure:
+    exclude:
+    - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
 auth0:
-  audience: ${AUTH0_AUDIENCE}
+  audience: https://snippet-searcher
 
 springdoc:
   swagger-ui:
@@ -16,3 +23,6 @@ springdoc:
   api-docs:
     enabled: true
     path: "/docs"
+
+server:
+  port: 8084

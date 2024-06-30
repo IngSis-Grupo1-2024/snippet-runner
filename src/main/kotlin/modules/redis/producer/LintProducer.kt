@@ -1,12 +1,14 @@
-package redis.producer
+package modules.redis.producer
 
+import com.example.redisevents.LintResult
 import org.austral.ingsis.redis.RedisStreamProducer
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.redis.core.RedisTemplate
-import redis.events.LintResult
+import org.springframework.stereotype.Component
 
+@Component
 class LintProducer(
-    @Value("\${redis.result_lint_key}") streamKey: String,
+    @Value("\${manager.redis.result_lint_key}") streamKey: String,
     redis: RedisTemplate<String, String>,
 ) : RedisStreamProducer(streamKey, redis) {
     fun publishEvent(event: LintResult) {

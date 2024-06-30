@@ -1,4 +1,4 @@
-package redis.snippetGetter
+package modules.redis.snippetGetter
 
 import org.springframework.http.HttpStatus
 import org.springframework.web.client.HttpClientErrorException
