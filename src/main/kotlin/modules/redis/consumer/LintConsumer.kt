@@ -6,8 +6,8 @@ import com.example.redisevents.LintResultStatus
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import modules.execution.model.Language
-import modules.execution.model.LinterInput
+import modules.execution.input.Language
+import modules.execution.input.LinterInput
 import modules.execution.service.ExecutionService
 import modules.redis.producer.LintProducer
 import org.austral.ingsis.redis.RedisStreamConsumer

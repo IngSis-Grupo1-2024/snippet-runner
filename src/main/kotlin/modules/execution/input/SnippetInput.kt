@@ -1,9 +1,10 @@
-package modules.execution.model
+package modules.execution.input
 
-class FormatInput(
+data class SnippetInput(
+    val name: String,
     val content: String,
     val language: Language,
     val version: String,
-    val rules: List<FormatRulesInput>,
+    val extension: String,
     val input: List<String>,
 )

@@ -82,6 +82,11 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     // redis events
     implementation("org.gradle.redisevents:events:1.1.0-SNAPSHOT")
+
+    // new relic logs
+    implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+    testImplementation("io.projectreactor:reactor-test")
 }
 
 tasks.withType<KotlinCompile> {
@@ -124,3 +129,8 @@ tasks.register<JavaExec>("ktlintFormat") {
         "!**/build/**",
     )
 }
+
+tasks.bootJar {
+    archiveFileName.set("${archiveBaseName.get()}.${archiveExtension.get()}")
+}
+
