@@ -40,6 +40,9 @@ class PrintScriptManager : LanguageManager {
         val formatterInstance = FormatterCli(outputEmitter, parseToPrintScriptVersion(version), input)
         val streamedResult = formatterInstance.formatInputStream(rulePath, inputStream)
         val stringResult = streamedResult.bufferedReader().use { it.readText() }
+        if (stringResult.contains("error:") || stringResult.contains("expected at")) {
+            throw Exception(stringResult)
+        }
         outputEmitter.print(stringResult)
     }
 

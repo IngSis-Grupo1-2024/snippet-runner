@@ -1,20 +1,15 @@
 package execution
 
-// import modules.execution.controller.ExecutionController
-// import org.junit.jupiter.api.Assertions
-// import org.junit.jupiter.api.Test
-// import java.io.FileInputStream
-
 class ExecutionTest {
-//    private val executionController = ExecutionController(PrintScriptManager())
-    private val inputPath = "src/test/resources/execution/snippet-inputs"
-    private val outputPath = "src/test/resources/execution/expected-snippet-outputs"
-//
+//    private val executionController = ExecutionController(ExecutionService())
+//    private val inputPath = "src/test/resources/execution/snippet-inputs"
+//    private val outputPath = "src/test/resources/execution/expected-snippet-outputs"
+
 //    @Test
 //    fun `001 - Simple print execution should return expected output for the given snippet`() {
 //        val snippetPath = "$inputPath/simple-print-test.ps"
-//        val snippetInput = FileInputStream(snippetPath)
-//        val response = executionController.byContent(snippetInput)
+//        val snippetInput = FilenputStream(snippetPath)
+//        val response = executionController.executeSnippet(snippetInput)
 //        Assertions.assertEquals(, response.body)
 //    }
 //

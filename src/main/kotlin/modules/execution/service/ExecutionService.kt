@@ -107,7 +107,7 @@ class ExecutionService {
                     "expression" to rule.expression,
                     "identifier" to rule.identifier,
                     "literal" to rule.literal,
-//                "format" to rule.format
+                    "format" to rule.format
                 )
         }
 

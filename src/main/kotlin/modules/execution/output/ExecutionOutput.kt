@@ -8,7 +8,6 @@ class ExecutionOutput(
 ) :
     OutputEmitter {
     override fun print(string: String) {
-//        println(string)
         body.add(string)
     }
 
