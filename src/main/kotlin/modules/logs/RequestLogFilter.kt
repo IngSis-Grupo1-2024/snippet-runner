@@ -1,4 +1,4 @@
-package modules.common.logs
+package modules.logs
 
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
