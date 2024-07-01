@@ -12,7 +12,7 @@ class LintProducer(
     redis: RedisTemplate<String, String>,
 ) : RedisStreamProducer(streamKey, redis) {
     fun publishEvent(event: LintResult) {
-        println("userId: ${event.userId}, snippetKey: ${event.snippetId}, status: ${event.result}")
+        println("Publishing event: userId: ${event.userId}, snippetKey: ${event.snippetId}, status: ${event.result}")
         emit(event)
     }
 }

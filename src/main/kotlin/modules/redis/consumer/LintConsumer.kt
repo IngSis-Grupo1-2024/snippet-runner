@@ -48,21 +48,18 @@ class LintConsumer(
                 eventPayload.userId,
             )
 
-        try {
-            val result = executionService.lint(payloadParsed)
-            val resultEventStatus =
-                if (result.statusCode.value() == 200) LintResultStatus.SUCCESS else LintResultStatus.FAILURE
-
+        val result = executionService.lint(payloadParsed)
+        if (result.statusCode.value() == 200) {
             GlobalScope.launch {
                 producer.publishEvent(
                     LintResult(
                         eventPayload.userId,
                         eventPayload.snippetId,
-                        resultEventStatus,
+                        LintResultStatus.SUCCESS,
                     ),
                 )
             }
-        } catch (exception: Exception) {
+        } else {
             GlobalScope.launch {
                 producer.publishEvent(
                     LintResult(
@@ -72,9 +69,8 @@ class LintConsumer(
                     ),
                 )
             }
-        } finally {
-            println("Finished processing record: ${record.value}")
         }
+        println("Finished processing record: ${record.value}")
     }
 
     override fun options(): StreamReceiver.StreamReceiverOptions<String, ObjectRecord<String, LintRequest>> {
