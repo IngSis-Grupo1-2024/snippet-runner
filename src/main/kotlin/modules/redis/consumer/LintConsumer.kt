@@ -6,11 +6,14 @@ import com.example.redisevents.LintResultStatus
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import modules.execution.controller.ExecutionController
 import modules.execution.input.Language
 import modules.execution.input.LinterInput
 import modules.execution.service.ExecutionService
 import modules.redis.producer.LintProducer
+import org.aspectj.weaver.Lint
 import org.austral.ingsis.redis.RedisStreamConsumer
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Profile
 import org.springframework.data.redis.connection.stream.ObjectRecord
@@ -30,9 +33,11 @@ class LintConsumer(
     init {
         subscription()
     }
+    private val logger = LoggerFactory.getLogger(LintConsumer::class.java)
 
     @OptIn(DelicateCoroutinesApi::class)
     override fun onMessage(record: ObjectRecord<String, LintRequest>) {
+        logger.info("Received record: ${record.value}")
         println("Received record: ${record.value}")
 
         val eventPayload = record.value
@@ -70,6 +75,7 @@ class LintConsumer(
                 )
             }
         }
+        logger.info("Finished processing record: ${record.value}")
         println("Finished processing record: ${record.value}")
     }
 

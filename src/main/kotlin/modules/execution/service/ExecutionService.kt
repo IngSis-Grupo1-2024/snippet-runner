@@ -57,7 +57,6 @@ constructor(
         if (result == "SUCCESSFUL ANALYSIS") {
             return ResponseEntity.ok(output.getOutput())
         } else {
-            output.body = mutableListOf()
             output.handleError(result)
             return ResponseEntity.badRequest().body(output.getOutput())
         }
