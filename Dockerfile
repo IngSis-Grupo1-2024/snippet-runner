@@ -10,6 +10,10 @@ COPY  . /app
 WORKDIR /app
 RUN ./gradlew bootJar
 
+
+CMD ["mkdir src & cd src & mkdir main & cd main & mkdir kotlin & cd kotlin & mkdir utils & cd utils & touch lint-rules.json & touch format-rules.json"]
+WORKDIR /home/gradle/src
+
 FROM eclipse-temurin:17-jre-jammy
 EXPOSE 8080
 RUN mkdir /app

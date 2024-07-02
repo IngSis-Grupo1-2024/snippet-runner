@@ -1,25 +1,22 @@
 version: '3.3'
 
 services:
-  api-runner:
-    container_name: "api-runner"
+  api-run:
+    container_name: "api-run"
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8082:8082"
+      - "8084:8084"
     environment:
-      DB_USER: sa
-      DB_PASSWORD: password
-      DB_NAME: db-runner
-      DB_HOST: postgres_db
-      DB_PORT: 5432
       NEW_RELIC_LICENSE_KEY: ${NEW_RELIC_LICENSE_KEY}
       NEW_RELIC_APP_NAME: ${NEW_RELIC_APP_NAME}
       AUTH_SERVER_URI: ${AUTH_SERVER_URI}
       AUTH_CLIENT_ID: ${AUTH_CLIENT_ID}
       AUTH_CLIENT_SECRET: ${AUTH_CLIENT_SECRET}
       AUTH0_AUDIENCE: ${AUTH0_AUDIENCE}
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PORT: ${REDIS_PORT}
 
   db-runner:
     container_name: postgres_db
