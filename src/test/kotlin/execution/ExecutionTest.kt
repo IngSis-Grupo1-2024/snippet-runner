@@ -1,7 +1,7 @@
 package execution
 
 import modules.execution.controller.ExecutionController
-import modules.execution.model.*
+import modules.execution.input.*
 import modules.execution.output.ExecutionOutputDto
 import modules.execution.service.ExecutionService
 import org.junit.jupiter.api.Assertions
@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 import java.io.File
 
 class ExecutionTest {
-    private val executionController = ExecutionController(ExecutionService())
+    private val executionController = ExecutionController(ExecutionService("src/test/resources/lint-rules.json", "src/test/resources/format-rules.json"))
     private val inputPath = "src/test/resources/snippet-inputs"
 
     @Test
@@ -46,15 +46,15 @@ class ExecutionTest {
             ExecutionOutputDto(
                 output = listOf(),
                 error =
-                    listOf(
-                        "error: delimiter (;) expected at {\n" +
+                listOf(
+                    "error: delimiter (;) expected at {\n" +
                             "\tstartOffset: 12,\n" +
                             "\tendOffset: 13,\n" +
                             "\tstartLine: 1,\n" +
                             "\tendLine: 1,\n" +
                             "\tstartColumn: 12,\n" +
                             "\tendColumn: 13}",
-                    ),
+                ),
             )
         Assertions.assertEquals(expectedResponse, response.body)
     }
@@ -74,8 +74,37 @@ class ExecutionTest {
                 listOf(""),
             )
         val response = executionController.formatSnippet(formatInput)
-        val expectedResponse = ExecutionOutputDto(output = listOf("\n\nprintln('first');\n\n\nprintln('second');\n"), error = listOf())
+        val expectedResponse =
+            ExecutionOutputDto(output = listOf("\n\nprintln('first');\n\n\nprintln('second');\n"), error = listOf())
         Assertions.assertEquals(expectedResponse, response.body)
     }
 
+    @Test
+    fun `003 - Lint snippet should return expected error`() {
+        // Arrange
+        val snippetPath = "$inputPath/double-println-test.ps"
+        val linterInput = LinterInput(
+            File(snippetPath).readText(),
+            Language.PRINTSCRIPT,
+            "v1",
+            listOf(
+                com.example.redisevents.LintRulesInput(
+                    name = "println",
+                    isActive = true,
+                    expression = true,
+                    identifier = false,
+                    literal = true,
+                    format = ""
+                )
+            ),
+            listOf(""),
+            "1",
+            "1"
+        )
+        val expectedResponse = ExecutionOutputDto(output = listOf("SUCCESSFUL ANALYSIS"), error = listOf())
+
+        val response = executionController.lintSnippet(linterInput)
+
+        Assertions.assertEquals(expectedResponse, response.body)
+    }
 }

@@ -119,7 +119,7 @@ constructor(
         return jsonMap
     }
 
-    private fun parseFormatRule(jsonMap: MutableMap<String, Map<String, Any>>, rule: LintRulesInput) {
+    private fun parseBasicRule(jsonMap: MutableMap<String, Map<String, Any>>, rule: LintRulesInput) {
         jsonMap[rule.name] =
             mapOf(
                 "on" to rule.isActive,
@@ -129,7 +129,7 @@ constructor(
             )
     }
 
-    private fun parseBasicRule(
+    private fun parseFormatRule(
         jsonMap: MutableMap<String, Map<String, Any>>,
         rule: LintRulesInput
     ) {
