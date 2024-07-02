@@ -6,12 +6,10 @@ import com.example.redisevents.LintResultStatus
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import modules.execution.controller.ExecutionController
 import modules.execution.input.Language
 import modules.execution.input.LinterInput
 import modules.execution.service.ExecutionService
 import modules.redis.producer.LintProducer
-import org.aspectj.weaver.Lint
 import org.austral.ingsis.redis.RedisStreamConsumer
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
@@ -35,46 +33,17 @@ class LintConsumer(
     }
     private val logger = LoggerFactory.getLogger(LintConsumer::class.java)
 
-    @OptIn(DelicateCoroutinesApi::class)
     override fun onMessage(record: ObjectRecord<String, LintRequest>) {
         logger.info("Received record: ${record.value}")
-        println("Received record: ${record.value}")
 
         val eventPayload = record.value
-        println(eventPayload.input)
         val payloadParsed =
-            LinterInput(
-                eventPayload.content,
-                languageParser(eventPayload.language),
-                eventPayload.version,
-                eventPayload.rules,
-                eventPayload.input,
-                eventPayload.snippetId,
-                eventPayload.userId,
-            )
+            getLinterInput(eventPayload)
 
         val result = executionService.lint(payloadParsed)
-        if (result.statusCode.value() == 200) {
-            GlobalScope.launch {
-                producer.publishEvent(
-                    LintResult(
-                        eventPayload.userId,
-                        eventPayload.snippetId,
-                        LintResultStatus.SUCCESS,
-                    ),
-                )
-            }
-        } else {
-            GlobalScope.launch {
-                producer.publishEvent(
-                    LintResult(
-                        eventPayload.userId,
-                        eventPayload.snippetId,
-                        LintResultStatus.FAILURE,
-                    ),
-                )
-            }
-        }
+        if (result.statusCode.value() == 200) publishEvent(eventPayload, LintResultStatus.SUCCESS)
+        else publishEvent(eventPayload, LintResultStatus.FAILURE)
+
         logger.info("Finished processing record: ${record.value}")
         println("Finished processing record: ${record.value}")
     }
@@ -85,6 +54,30 @@ class LintConsumer(
             .targetType(LintRequest::class.java)
             .build()
     }
+
+    @OptIn(DelicateCoroutinesApi::class)
+    private fun publishEvent(eventPayload: LintRequest, lintResultStatus: LintResultStatus) {
+        GlobalScope.launch {
+            producer.publishEvent(
+                LintResult(
+                    eventPayload.userId,
+                    eventPayload.snippetId,
+                    lintResultStatus,
+                ),
+            )
+        }
+    }
+
+    private fun getLinterInput(eventPayload: LintRequest) = LinterInput(
+        eventPayload.content,
+        languageParser(eventPayload.language),
+        eventPayload.version,
+        eventPayload.rules,
+        eventPayload.input,
+        eventPayload.snippetId,
+        eventPayload.userId,
+    )
+
 
     private fun languageParser(language: String): Language {
         return when (language) {

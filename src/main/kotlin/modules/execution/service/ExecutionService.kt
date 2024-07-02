@@ -53,10 +53,11 @@ constructor(
     }
 
     private fun getLintingResult(output: ExecutionOutput): ResponseEntity<ExecutionOutputDto> {
+        if(output.getOutput().output.isEmpty())
+            return ResponseEntity.badRequest().body(output.getOutput())
         val result = output.getOutput().output[0]
-        if (result == "SUCCESSFUL ANALYSIS") {
-            return ResponseEntity.ok(output.getOutput())
-        } else {
+        if (result == "SUCCESSFUL ANALYSIS") return ResponseEntity.ok(output.getOutput())
+        else {
             output.handleError(result)
             return ResponseEntity.badRequest().body(output.getOutput())
         }
@@ -112,16 +113,30 @@ constructor(
         val jsonMap = mutableMapOf<String, Map<String, Any>>()
 
         rulesList.forEach { rule ->
-            jsonMap[rule.name] =
-                mapOf(
-                    "on" to rule.isActive,
-                    "expression" to rule.expression,
-                    "identifier" to rule.identifier,
-                    "literal" to rule.literal,
-                    "format" to rule.format
-                )
+            if(rule.format == "") parseBasicRule(jsonMap, rule)
+            else parseFormatRule(jsonMap, rule)
         }
         return jsonMap
+    }
+
+    private fun parseFormatRule(jsonMap: MutableMap<String, Map<String, Any>>, rule: LintRulesInput) {
+        jsonMap[rule.name] =
+            mapOf(
+                "on" to rule.isActive,
+                "expression" to rule.expression,
+                "identifier" to rule.identifier,
+                "literal" to rule.literal,
+            )
+    }
+
+    private fun parseBasicRule(
+        jsonMap: MutableMap<String, Map<String, Any>>,
+        rule: LintRulesInput
+    ) {
+        jsonMap[rule.name] =
+            mapOf(
+                "format" to rule.format
+            )
     }
 
     private fun writeInFile(jsonMap: MutableMap<String, Map<String, Any>>, path: String): Path {
