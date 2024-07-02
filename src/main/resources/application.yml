@@ -7,9 +7,9 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: https://dev-dxazwu1rijz501rx.us.auth0.com/
-          client-id: wsLlRrSaLvb45jz9v2UBugf4ruUxvd08
-          client-secret: bwEMgfxZ1PHDLROiqR9WugQoBGnFH_FZW4dsC5KzzAuFXxokhviX552vuKU6s_Yx
+          issuer-uri: ${AUTH_SERVER_URI}
+          client-id: ${AUTH_CLIENT_ID}
+          client-secret: ${AUTH_CLIENT_SECRET}
   autoconfigure:
     exclude:
     - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
