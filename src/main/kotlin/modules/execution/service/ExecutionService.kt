@@ -67,7 +67,7 @@ class ExecutionService {
         } catch (e: Exception) {
             output.handleError(e.message!!)
         }
-        val result = output.getOutput().output[0]
+        val result = output.getOutput().output.toString()
         if (result == "SUCCESSFUL ANALYSIS") {
             return ResponseEntity.ok(output.getOutput())
         } else {
@@ -106,7 +106,7 @@ class ExecutionService {
                     "expression" to rule.expression,
                     "identifier" to rule.identifier,
                     "literal" to rule.literal,
-                    "format" to rule.format
+                    "format" to rule.format,
                 )
         }
 
