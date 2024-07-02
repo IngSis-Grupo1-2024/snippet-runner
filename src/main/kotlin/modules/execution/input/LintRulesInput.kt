@@ -1,4 +1,4 @@
-package modules.execution.model
+package modules.execution.input
 
 class LintRulesInput(
     val name: String,

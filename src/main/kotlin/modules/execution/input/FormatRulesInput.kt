@@ -1,4 +1,4 @@
-package modules.execution.model
+package modules.execution.input
 
 data class FormatRulesInput(
     val name: String,

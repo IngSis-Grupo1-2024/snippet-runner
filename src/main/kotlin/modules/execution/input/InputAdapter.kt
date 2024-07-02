@@ -1,4 +1,4 @@
-package modules.execution.model
+package modules.execution.input
 
 import ingsis.interpreter.interpretStatement.Input
 import java.util.*
