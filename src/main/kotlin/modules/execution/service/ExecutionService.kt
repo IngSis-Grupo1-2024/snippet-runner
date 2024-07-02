@@ -10,6 +10,8 @@ import modules.execution.input.*
 import modules.execution.output.ExecutionOutput
 import modules.execution.output.ExecutionOutputDto
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import java.io.File
@@ -18,7 +20,14 @@ import java.nio.file.Paths
 import java.util.*
 
 @Service
-class ExecutionService {
+class ExecutionService
+@Autowired
+constructor(
+    @Value("\${lint.url}")
+    private val lintUrl: String,
+    @Value("\${format.url}")
+    private val formatUrl: String
+){
     private val logger = LoggerFactory.getLogger(ExecutionController::class.java)
 
     fun execute(snippetInfo: SnippetInput): ResponseEntity<ExecutionOutputDto> {
@@ -78,13 +87,13 @@ class ExecutionService {
     private fun formatRulesListToJson(rulesList: List<FormatRulesInput>): Path {
         val jsonMap = createFormatJsonMap(rulesList)
 
-        return writeInFile(jsonMap, "src/main/kotlin/utils/rules/format-rules.json")
+        return writeInFile(jsonMap, formatUrl)
     }
 
     private fun lintRulesListToJson(rulesList: List<LintRulesInput>): Path {
         val jsonMap = createLintJsonMap(rulesList)
 
-        return writeInFile(jsonMap, "src/main/kotlin/utils/lint-rules.json")
+        return writeInFile(jsonMap, lintUrl)
     }
 
     private fun createFormatJsonMap(rulesList: List<FormatRulesInput>): MutableMap<String, Map<String, Any>> {

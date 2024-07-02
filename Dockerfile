@@ -20,4 +20,6 @@ RUN mkdir /app
 COPY --from=build /app/build/libs/snippet-runner.jar /app/snippet-runner.jar
 COPY newrelic/newrelic.jar /app/newrelic.jar
 COPY newrelic/newrelic.yml /app/newrelic.yml
+RUN touch /app/lint.json
+RUN touch /app/format.json
 ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=production","-javaagent:/app/newrelic.jar","/app/snippet-runner.jar"]
