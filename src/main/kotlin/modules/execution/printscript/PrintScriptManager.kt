@@ -57,7 +57,7 @@ class PrintScriptManager : LanguageManager {
         outputEmitter.print(result)
     }
 
-    private fun parseToPrintScriptVersion(version: String): Version {
+    fun parseToPrintScriptVersion(version: String): Version {
         return when (version) {
             "v1" -> Version.VERSION_1
             "v2" -> Version.VERSION_2

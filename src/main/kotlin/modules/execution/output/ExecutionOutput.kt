@@ -9,6 +9,7 @@ class ExecutionOutput(
 ) :
     OutputEmitter {
     private val logger = LoggerFactory.getLogger(ExecutionOutput::class.java)
+
     override fun print(string: String) {
         body.add(string)
     }

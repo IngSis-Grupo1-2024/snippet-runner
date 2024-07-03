@@ -8,8 +8,9 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import java.io.File
 
-class ExecutionTest {
-    private val executionController = ExecutionController(ExecutionService("src/test/resources/lint-rules.json", "src/test/resources/format-rules.json"))
+class ExecutionControllerTest {
+    private val executionController =
+        ExecutionController(ExecutionService("src/test/resources/lint-rules.json", "src/test/resources/format-rules.json"))
     private val inputPath = "src/test/resources/snippet-inputs"
 
     @Test
@@ -46,15 +47,15 @@ class ExecutionTest {
             ExecutionOutputDto(
                 output = listOf(),
                 error =
-                listOf(
-                    "error: delimiter (;) expected at {\n" +
+                    listOf(
+                        "error: delimiter (;) expected at {\n" +
                             "\tstartOffset: 12,\n" +
                             "\tendOffset: 13,\n" +
                             "\tstartLine: 1,\n" +
                             "\tendLine: 1,\n" +
                             "\tstartColumn: 12,\n" +
                             "\tendColumn: 13}",
-                ),
+                    ),
             )
         Assertions.assertEquals(expectedResponse, response.body)
     }
@@ -83,24 +84,25 @@ class ExecutionTest {
     fun `003 - Lint snippet should return expected error`() {
         // Arrange
         val snippetPath = "$inputPath/double-println-test.ps"
-        val linterInput = LinterInput(
-            File(snippetPath).readText(),
-            Language.PRINTSCRIPT,
-            "v1",
-            listOf(
-                com.example.redisevents.LintRulesInput(
-                    name = "println",
-                    isActive = true,
-                    expression = true,
-                    identifier = false,
-                    literal = true,
-                    format = ""
-                )
-            ),
-            listOf(""),
-            "1",
-            "1"
-        )
+        val linterInput =
+            LinterInput(
+                File(snippetPath).readText(),
+                Language.PRINTSCRIPT,
+                "v1",
+                listOf(
+                    com.example.redisevents.LintRulesInput(
+                        name = "println",
+                        isActive = true,
+                        expression = true,
+                        identifier = false,
+                        literal = true,
+                        format = "",
+                    ),
+                ),
+                listOf(""),
+                "1",
+                "1",
+            )
         val expectedResponse = ExecutionOutputDto(output = listOf("SUCCESSFUL ANALYSIS"), error = listOf())
 
         val response = executionController.lintSnippet(linterInput)

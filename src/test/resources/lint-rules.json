@@ -2,7 +2,7 @@
   "println" : {
     "on" : true,
     "expression" : true,
-    "identifier" : false,
+    "identifier" : true,
     "literal" : true
   }
 }

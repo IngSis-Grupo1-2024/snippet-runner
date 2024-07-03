@@ -31,6 +31,7 @@ class LintConsumer(
     init {
         subscription()
     }
+
     private val logger = LoggerFactory.getLogger(LintConsumer::class.java)
 
     override fun onMessage(record: ObjectRecord<String, LintRequest>) {
@@ -41,8 +42,11 @@ class LintConsumer(
             getLinterInput(eventPayload)
 
         val result = executionService.lint(payloadParsed)
-        if (result.statusCode.value() == 200) publishEvent(eventPayload, LintResultStatus.SUCCESS)
-        else publishEvent(eventPayload, LintResultStatus.FAILURE)
+        if (result.statusCode.value() == 200) {
+            publishEvent(eventPayload, LintResultStatus.SUCCESS)
+        } else {
+            publishEvent(eventPayload, LintResultStatus.FAILURE)
+        }
 
         logger.info("Finished processing record: ${record.value}")
         println("Finished processing record: ${record.value}")
@@ -56,7 +60,10 @@ class LintConsumer(
     }
 
     @OptIn(DelicateCoroutinesApi::class)
-    private fun publishEvent(eventPayload: LintRequest, lintResultStatus: LintResultStatus) {
+    private fun publishEvent(
+        eventPayload: LintRequest,
+        lintResultStatus: LintResultStatus,
+    ) {
         GlobalScope.launch {
             producer.publishEvent(
                 LintResult(
@@ -68,16 +75,16 @@ class LintConsumer(
         }
     }
 
-    private fun getLinterInput(eventPayload: LintRequest) = LinterInput(
-        eventPayload.content,
-        languageParser(eventPayload.language),
-        eventPayload.version,
-        eventPayload.rules,
-        eventPayload.input,
-        eventPayload.snippetId,
-        eventPayload.userId,
-    )
-
+    private fun getLinterInput(eventPayload: LintRequest) =
+        LinterInput(
+            eventPayload.content,
+            languageParser(eventPayload.language),
+            eventPayload.version,
+            eventPayload.rules,
+            eventPayload.input,
+            eventPayload.snippetId,
+            eventPayload.userId,
+        )
 
     private fun languageParser(language: String): Language {
         return when (language) {
