@@ -4,9 +4,9 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
-import modules.execution.model.FormatInput
-import modules.execution.model.LinterInput
-import modules.execution.model.SnippetInput
+import modules.execution.input.FormatInput
+import modules.execution.input.LinterInput
+import modules.execution.input.SnippetInput
 import modules.execution.output.ExecutionOutputDto
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping

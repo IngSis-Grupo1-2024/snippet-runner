@@ -1,9 +1,9 @@
-package modules.execution.model
+package modules.execution.input
 
-class LinterInput(
+class FormatInput(
     val content: String,
     val language: Language,
     val version: String,
-    val rules: List<LintRulesInput>,
+    val rules: List<FormatRulesInput>,
     val input: List<String>,
 )

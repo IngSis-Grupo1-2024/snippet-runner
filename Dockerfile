@@ -6,13 +6,19 @@ ARG TOKEN
 ENV GITHUB_ACTOR ${ACTOR}
 ENV GITHUB_TOKEN ${TOKEN}
 
-COPY  . /home/gradle/src
+COPY  . /app
+WORKDIR /app
+RUN ./gradlew bootJar
+
+
 WORKDIR /home/gradle/src
-RUN ./gradlew assemble
 
-
-FROM eclipse-temurin:17.0.11_9-jre-jammy
+FROM eclipse-temurin:17-jre-jammy
+EXPOSE 8080
 RUN mkdir /app
-COPY --from=build /home/gradle/src/build/libs/*.jar /app/spring-boot-application.jar
+COPY --from=build /app/build/libs/snippet-runner.jar /app/snippet-runner.jar
 COPY newrelic/newrelic.jar /app/newrelic.jar
-ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=production","-javaagent:/app/newrelic.jar","/app/spring-boot-application.jar"]
+COPY newrelic/newrelic.yml /app/newrelic.yml
+RUN touch /app/lint.json
+RUN touch /app/format.json
+ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=production","-javaagent:/app/newrelic.jar","/app/snippet-runner.jar"]

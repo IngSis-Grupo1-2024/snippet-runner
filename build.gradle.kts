@@ -25,6 +25,24 @@ repositories {
             password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
         }
     }
+
+    maven {
+        name = "GitHubPackagesClassRedisStreams"
+        url = uri("https://maven.pkg.github.com/austral-ingsis/class-redis-streams")
+        credentials {
+            username = project.findProperty("gpr.user") as String? ?: System.getenv("GITHUB_ACTOR")
+            password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
+        }
+    }
+
+    maven {
+        name = "GitHubPackagesRedisEvents"
+        url = uri("https://maven.pkg.github.com/IngSis-Grupo1-2024/redis-events")
+        credentials {
+            username = project.findProperty("gpr.user") as String? ?: System.getenv("GITHUB_ACTOR")
+            password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
+        }
+    }
 }
 
 dependencies {
@@ -55,9 +73,20 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-kotlin:1.7.0")
     implementation("org.springdoc:springdoc-openapi-data-rest:1.7.0")
     implementation("org.springdoc:springdoc-openapi-webflux-ui:1.7.0")
+    // redis
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
+    implementation("org.austral.ingsis:redis-streams-mvc:0.1.13")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
     // auth0 impl
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
     implementation("org.springframework.boot:spring-boot-starter-security")
+    // redis events
+    implementation("org.gradle.redisevents:events:1.1.0-SNAPSHOT")
+
+    // new relic logs
+    implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+    testImplementation("io.projectreactor:reactor-test")
 }
 
 tasks.withType<KotlinCompile> {
@@ -100,3 +129,8 @@ tasks.register<JavaExec>("ktlintFormat") {
         "!**/build/**",
     )
 }
+
+tasks.bootJar {
+    archiveFileName.set("${archiveBaseName.get()}.${archiveExtension.get()}")
+}
+
