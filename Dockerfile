@@ -13,7 +13,7 @@ RUN ./gradlew bootJar
 
 WORKDIR /home/gradle/src
 
-FROM eclipse-temurin:17-jre-jammy
+FROM amazoncorretto:17-alpine
 EXPOSE 8080
 RUN mkdir /app
 COPY --from=build /app/build/libs/snippet-runner.jar /app/snippet-runner.jar
