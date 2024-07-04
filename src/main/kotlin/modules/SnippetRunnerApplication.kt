@@ -14,16 +14,4 @@ class SnippetRunnerApplication {
             SpringApplication.run(SnippetRunnerApplication::class.java, *args)
         }
     }
-
-    @Bean
-    fun corsConfigurer(): WebMvcConfigurer {
-        return object : WebMvcConfigurer {
-            override fun addCorsMappings(registry: CorsRegistry) {
-                registry.addMapping("/**")
-                    .allowedOrigins("*")
-                    .allowedMethods("*")
-                    .allowedHeaders("*")
-            }
-        }
-    }
 }
